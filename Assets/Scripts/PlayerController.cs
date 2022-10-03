@@ -13,16 +13,18 @@ public class PlayerController : MonoBehaviour
     private Vector3 _playerVelocity;
     private bool _groundedPlayer;
     private Transform _cameraMain;
+    private Animator _animator;
     
     [SerializeField] private float playerSpeed = 2.0f;
-    [SerializeField] private float jumpHeight = 1.0f;
-    [SerializeField] private float gravityValue = -9.81f;
-    [SerializeField] private float rotationSpeed = 4f;
+    //[SerializeField] private float jumpHeight = 1.0f;
+    //[SerializeField] private float gravityValue = -9.81f;
+    //[SerializeField] private float rotationSpeed = 4f;
     
     private void Awake()
     {
         _playerInput = new PlayerInputController();
         _controller = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -59,14 +61,32 @@ public class PlayerController : MonoBehaviour
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
+
+            if (move.z < 1)
+            {
+                _animator.SetFloat("VelocityZ", Mathf.Abs(move.z)); 
+            }
+
+            if (move.x < 1)
+            {
+                _animator.SetFloat("VelocityX", Mathf.Abs(move.x));
+            }
+            
         }
 
-        if (movementInput != Vector2.zero)
+        /*if (move == Vector3.left)
         {
-            float targetAngle = Mathf.Atan2(movementInput.x, movementInput.y) * _cameraMain.eulerAngles.y;
+            _animator.SetFloat("Velocity", move.x);
+        }*/
+        
+        /*********** MOUSE CONTROL LOOK ***********/
+        /*if (movementInput != Vector2.zero)
+        {
+            float targetAngle = Mathf.Atan2(movementInput.x, movementInput.y) * Mathf.Rad2Deg + _cameraMain.eulerAngles.y;
             Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
-        }
+        }*/
+        
         /*******************JUMP********************/
         // Changes the height position of the player..
         /*if (_playerInput.Player.Jump.triggered && groundedPlayer)
