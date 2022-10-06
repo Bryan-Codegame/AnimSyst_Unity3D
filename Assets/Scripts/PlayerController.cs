@@ -8,7 +8,6 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     private PlayerInputController _playerInput;
-
     private CharacterController _controller;
     private Vector3 _playerVelocity;
     private bool _groundedPlayer;
@@ -61,17 +60,13 @@ public class PlayerController : MonoBehaviour
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
-
-            if (move.z < 1)
-            {
-                _animator.SetFloat("VelocityZ", Mathf.Abs(move.z)); 
-            }
-
-            if (move.x < 1)
-            {
-                _animator.SetFloat("VelocityX", Mathf.Abs(move.x));
-            }
-            
+            _animator.SetFloat("VelocityZ", Mathf.Abs(move.z));
+            _animator.SetFloat("Velocity", Mathf.Abs(move.x));
+        }
+        else
+        {
+            _animator.SetFloat("VelocityZ", Mathf.Abs(move.y));
+            _animator.SetFloat("Velocity", Mathf.Abs(move.y));
         }
 
         /*if (move == Vector3.left)
