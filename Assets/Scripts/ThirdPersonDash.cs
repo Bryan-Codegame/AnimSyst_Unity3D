@@ -24,7 +24,6 @@ public class ThirdPersonDash : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             StartCoroutine(Dash());
-            Debug.Log("Press A");
         }
     }
 
@@ -32,13 +31,19 @@ public class ThirdPersonDash : MonoBehaviour
     {
         float startTime = Time.time;
         
-        Debug.Log(Time.time);
-        Debug.Log(startTime + dashTime);
-        _playerController._controller.Move(_playerController.move * (dashSpeed * Time.deltaTime));
-        /*while (Time.time < (startTime + dashTime))
+        //_playerController._controller.Move(_playerController.move * (dashSpeed * Time.deltaTime));
+        while (Time.time < (startTime + dashTime))
         {
             _playerController._controller.Move(_playerController.move * (dashSpeed * Time.deltaTime));
+            yield return null;
+        }
+
+        //Other Method without dashTime 
+        /*for (int i = 0; i < 50; i++)
+        {
+            _playerController._controller.Move(_playerController.move * (dashSpeed * Time.deltaTime));
+            yield return null;
         }*/
-        yield return null;
+       
     }
 }
