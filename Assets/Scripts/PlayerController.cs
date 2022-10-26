@@ -8,11 +8,13 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     private PlayerInputController _playerInput;
-    private CharacterController _controller;
+    public CharacterController _controller;
     private Vector3 _playerVelocity;
     private bool _groundedPlayer;
     private Transform _cameraMain;
     private Animator _animator;
+
+    public Vector3 move;
     
     [SerializeField] private float playerSpeed = 2.0f;
     //[SerializeField] private float jumpHeight = 1.0f;
@@ -52,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
 
         Vector2 movementInput = _playerInput.Player.Move.ReadValue<Vector2>();
-        Vector3 move = new Vector3(movementInput.x, 0, movementInput.y );
+        move = new Vector3(movementInput.x, 0, movementInput.y );
         move = _cameraMain.forward * move.z + _cameraMain.right * move.x;
         move.y = 0f;
         _controller.Move(move * (Time.deltaTime * playerSpeed));
